@@ -1,10 +1,25 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import postsReducer from '../Reducers/postsReducer';
+import { serverUrl } from '../Constants/main';
+import axios from 'axios';
+import * as A from '../Constants/actions';
  
-export default function usePosts() {
+export default function usePosts(page) {
  
     const [posts, dispachPosts] = useReducer(postsReducer, null);
-   
+
+    useEffect(_ => {
+        if (page !== '') {  // '' stringas simbolizuoja pagrindinį puslapį (home)
+            return;
+        }
+        axios.get(serverUrl + 'posts')
+            .then(response => {
+                dispachPosts({ type: A.LOAD_ALL_POSTS, data: response.data });
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }, [page]);
    
     return { posts };
  
