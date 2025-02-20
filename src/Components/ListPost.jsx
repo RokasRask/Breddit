@@ -3,7 +3,7 @@ export default function ListPost({post}) {
     return (
         <div className="post">
             <div className="post-top">
-            <span className="author"><img src={post.avatar} alt="avatar" style={{width: '30px'}} /></span>
+                <span className="author"><img src={post.avatar} alt="avatar" style={{width: '30px'}} /></span>
                 <span className="date">{new Date(post.date).toLocaleDateString('lt-LT')}</span>
             </div>
             <h2>{post.title}</h2>

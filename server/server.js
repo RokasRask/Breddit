@@ -24,7 +24,7 @@ app.get(url + 'posts', (req, res) => {
     setTimeout(_ => {
 
         const sql = `
-            SELECT p.id, p.title, p.content, p.date, p.image_url, a.avatar, p.likes, p.comments
+            SELECT p.id, p.title, p.content, p.date, p.image_url, a.avatar, p.likes, p.comments 
             FROM posts AS p
             INNER JOIN authors AS a
             ON p.author_id = a.id
@@ -39,7 +39,7 @@ app.get(url + 'posts', (req, res) => {
             }
 
             result = result.map(post => {
-                post.avatar = 'data:image/svg+xml;base64,' + btoa(post.avatar);
+                post.avatar = 'data:image/svg+xml;base64,' + btoa(post.avatar); // avataro svg kodas paverčiamas į base64
                 post.likes = JSON.parse(post.likes);
                 return post;
             });

@@ -6,10 +6,12 @@ const DataContext = createContext();
 
 export const Data = ({ children }) => {
 
+    // duomenų gavimas ir Routerio konteksto. (duomenys tarp kontekstų)
     const { page, parameters } = useContext(RouterContext);
-
+    
     const { posts } = usePosts(page);
-
+    
+    
     return (
         <DataContext.Provider value={{
             posts
