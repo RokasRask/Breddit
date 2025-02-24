@@ -54,22 +54,22 @@ app.get(url + 'comments/:id/:type', (req, res) => {
     setTimeout(_ => {
         const id = req.params.id;
         const type = req.params.type;
- 
+
         let sql = '';
- 
+
         sql = `
             SELECT c.id, c.post_id AS postId, c.comment_id AS comId, c.content AS body
             FROM comments AS c
             INNER JOIN authors AS a
             ON c.author_id = a.id
         `;
- 
+
         if (type === 'post') {
             sql += `WHERE c.post_id = ?`;
         } else if (type === 'comment') {
             sql += `WHERE c.comment_id = ?`;
         }
- 
+
         con.query(sql, [id], (err, result) => {
             if (err) {
                 console.log(err);
@@ -78,7 +78,7 @@ app.get(url + 'comments/:id/:type', (req, res) => {
             }
             res.json(result);
         });
-       
+
     }, 2000);
 });
 
