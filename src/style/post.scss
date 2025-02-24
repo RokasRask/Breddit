@@ -70,6 +70,14 @@
                     color: C.$green;
                 }
             }
+            .comment {
+                cursor: pointer;
+                padding: 0 10px;
+                color: cadetblue;
+                &:hover {
+                    color: C.$blue;
+                }
+            }
         }
     }
 }

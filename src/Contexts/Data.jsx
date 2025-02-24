@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import usePosts from '../Hooks/usePosts';
+import useComments from '../Hooks/useComments';
 import RouterContext from './Router';
 
 const DataContext = createContext();
@@ -11,6 +12,8 @@ export const Data = ({ children }) => {
   
     
     const { posts } = usePosts(page);
+
+    const { comments } = useComments();
 
     console.log('Perkraunamas Data.jsx:', page, posts);
     

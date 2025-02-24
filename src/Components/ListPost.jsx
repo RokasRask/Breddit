@@ -1,9 +1,14 @@
-export default function ListPost({post}) {
+import { useContext } from "react";
+import DataContext from "../Contexts/Data";
+
+export default function ListPost({ post }) {
+
+    const { comments, getComments } = useContext(DataContext);
 
     return (
         <div className="post">
             <div className="post-top">
-                <span className="author"><img src={post.avatar} alt="avatar" style={{width: '30px'}} /></span>
+                <span className="author"><img src={post.avatar} alt="avatar" style={{ width: '30px' }} /></span>
                 <span className="date">{new Date(post.date).toLocaleDateString('lt-LT')}</span>
             </div>
             <h2>{post.title}</h2>
@@ -14,10 +19,18 @@ export default function ListPost({post}) {
             <div className="post-bottom">
                 <span className="likes">
                     <i className="up">⇧</i>
-                        {post.likes.l.length - post.likes.d.length}
+                    {post.likes.l.length - post.likes.d.length}
                     <i className="down">⇩</i>
                 </span>
-                <span className="comment">Comments: {post.comments}</span>
+                <span className="comment" onClick={_ => getComments(post.id, 'post')}>Comments: {post.comments}</span>
+            </div>
+            <div className="post-comments">
+                <h3>Comments</h3>
+                {
+                    comments
+                        .filter(comment => comment.postId === post.id && comment.comId === null)
+                        .map(comment => <div key={comment.id} className="comment">{comment.body}</div>)
+                }
             </div>
         </div>
     );
