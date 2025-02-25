@@ -9,18 +9,20 @@ export const Data = ({ children }) => {
 
     // duomenų gavimas ir Routerio konteksto. (duomenys tarp kontekstų)
     const { page, parameters } = useContext(RouterContext);
-  
-    
+
+
     const { posts } = usePosts(page);
 
-    const { comments } = useComments();
+    const { comments, getComments } = useComments();
 
     console.log('Perkraunamas Data.jsx:', page, posts);
-    
-    
+
+
     return (
         <DataContext.Provider value={{
-            posts
+            posts,
+            comments, 
+            getComments
         }}>
             {children}
             {console.log('Renderinamas DATA su posts:', posts)}

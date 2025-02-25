@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import Wrapper from '../Components/Wrapper';
 import Page404 from '../Components/Page404';
 import Home from '../Pages/Home';
+import Login from '../Pages/Login';
 
 
 const RouterContext = createContext();
@@ -14,7 +15,8 @@ export const Router = ({ children }) => {
 
     const routes = {
         '': {c: <Home />, title: 'Home', params: 0},
-        'home': {c: <Home />, title: 'Home', params: 0}
+        'home': {c: <Home />, title: 'Home', params: 0},
+        'login': {c: <Login />, title: 'Login', params: 0, hideNav: true},
     };
 
     const [page, setPage] = useState(_ => {
@@ -47,6 +49,8 @@ export const Router = ({ children }) => {
         setShowComponent(null);
         console.log('useEffect ROUTER [page, parameters]');
     }, [page, parameters]);
+
+    
 
 
 
