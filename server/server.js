@@ -8,7 +8,10 @@ const app = express();
 const port = 3001;
 app.use(bodyParser.json());
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 const url = '/api/v1/';
 
@@ -58,7 +61,7 @@ app.get(url + 'comments/:id/:type', (req, res) => {
         let sql = '';
 
         sql = `
-            SELECT c.id, c.post_id AS postId, c.comment_id AS comId, c.content AS body
+            SELECT c.id, c.post_id AS postId, c.comment_id AS comId, c.content AS body, c.likes, a.name AS author
             FROM comments AS c
             INNER JOIN authors AS a
             ON c.author_id = a.id
@@ -76,6 +79,12 @@ app.get(url + 'comments/:id/:type', (req, res) => {
                 res.status(500).json({ error: err.message });
                 return;
             }
+
+            result = result.map(comment => {
+                comment.likes = JSON.parse(comment.likes);
+                return comment;
+            });
+
             res.json(result);
         });
 
