@@ -7,7 +7,7 @@ const DataContext = createContext();
 
 export const Data = ({ children }) => {
 
-    // duomenų gavimas ir Routerio konteksto. (duomenys tarp kontekstų)
+    // duomenų gavimas iš Routerio konteksto. (duomenys tarp kontekstų)
     const { page, parameters } = useContext(RouterContext);
 
 
