@@ -1,13 +1,37 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import DataContext from '../Contexts/Data';
 import ListComment from './ListComment';
+import AuthContext from '../Contexts/Auth';
+import * as C from '../Constants/actions';
 
 export default function ListPost({post}) {
 
-    const {comments, getComments} = useContext(DataContext);
+    const {comments, getComments, dispachPosts} = useContext(DataContext);
 
-    const upVote = _ => {};
-    const downVote = _ => {};
+    const { user } = useContext(AuthContext);
+
+    useEffect(_ => {
+
+        console.log('pakito', post.id)
+
+    }, [post])
+
+    const upVote = _ => {
+        const ao = {
+            type: C.UPVOTE_POST,
+            postId: post.id,
+            user
+        };
+        dispachPosts(ao);
+    };
+    const downVote = _ => {
+        const ao = {
+            type: C.DOWNVOTE_POST,
+            postId: post.id,
+            user
+        };
+        dispachPosts(ao);
+    };
 
     return (
         <div className="post">
