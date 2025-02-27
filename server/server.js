@@ -225,7 +225,33 @@ app.post(url + 'logout', (req, res) => {
 
 });
 
+app.patch(url + ':postId/update-votes', (req, res) => {
 
+    const { postId } = req.params;
+    const likes = JSON.stringify(req.body);
+
+    console.log(postId, likes);
+
+    const sql = `
+        UPDATE posts
+        SET likes = ?
+        WHERE id = ?
+    `;
+
+    con.query(sql, [likes, postId], (err) => {
+        if (err) {
+            res.status(500).json({
+                message: 'Viskas blogai'
+            })
+        }
+        res.json({
+            message: 'Viskas puiku'
+        })
+    });
+
+    res.send('OK');
+
+});
 
 app.listen(port, () => {
     console.log(`Breddit serveris darbui pasiruošęs ant ${port} porto!`);

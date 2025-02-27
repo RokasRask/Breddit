@@ -1,8 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import DataContext from '../Contexts/Data';
 import ListComment from './ListComment';
 import AuthContext from '../Contexts/Auth';
 import * as C from '../Constants/actions';
+import useVote from '../Hooks/useVote';
 
 export default function ListPost({post}) {
 
@@ -10,13 +11,25 @@ export default function ListPost({post}) {
 
     const { user } = useContext(AuthContext);
 
+    const { setLikes } = useVote(post.id);
+
+    const vote = useRef(false);
+
     useEffect(_ => {
+
+        if (!vote.current) {
+            return;
+        }
+        vote.current = false;
+
+        setLikes(post.likes);
 
         console.log('pakito', post.id)
 
     }, [post])
 
     const upVote = _ => {
+        vote.current = true;
         const ao = {
             type: C.UPVOTE_POST,
             postId: post.id,
@@ -25,6 +38,7 @@ export default function ListPost({post}) {
         dispachPosts(ao);
     };
     const downVote = _ => {
+        vote.current = true;
         const ao = {
             type: C.DOWNVOTE_POST,
             postId: post.id,
