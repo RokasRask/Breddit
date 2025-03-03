@@ -5,9 +5,10 @@ import AuthContext from '../Contexts/Auth';
 import * as C from '../Constants/actions';
 import useVote from '../Hooks/useVote';
 
+
 export default function ListPost({ post }) {
 
-    const { comments, getComments, dispachPosts, addPostNewComment } = useContext(DataContext);
+    const { comments, getComments, dispachPosts, addNewPostComment } = useContext(DataContext);
 
     const { user } = useContext(AuthContext);
 
@@ -18,7 +19,8 @@ export default function ListPost({ post }) {
     const vote = useRef(false);
 
     const addPostComment = _ => {
-        addPostNewComment(post.id, postCom, user.name);
+        console.log('add');
+        addNewPostComment(post.id, postCom, user);
         setPostCom('');
     }
 
@@ -31,7 +33,7 @@ export default function ListPost({ post }) {
 
         setLikes(post.likes);
 
-        console.log('pakito', post.id)
+        console.log('pakito', post.id);
 
     }, [post])
 
@@ -74,20 +76,23 @@ export default function ListPost({ post }) {
                 <span className="comment" onClick={_ => getComments(post.id, 'post')}>Show all comments: {post.comments}</span>
             </div>
             <div className="post-comments">
-                <h3>Comments</h3>
+
 
                 {
                     comments
                         .filter(comment => comment.postId === post.id && comment.comId === null)
                         .map(comment => <ListComment key={comment.id} comment={comment} />)
                 }
+
                 {
                     user.role !== 'guest' &&
-                    <div className='write-comment'>
+
+                    <div className="write-comment">
                         <div>Write comment</div>
                         <textarea onChange={e => setPostCom(e.target.value)} value={postCom} />
-                        <button className='blue' onClick={addPostComment}>send</button>
+                        <button className="blue" onClick={addPostComment}>send</button>
                     </div>
+
                 }
 
             </div>
