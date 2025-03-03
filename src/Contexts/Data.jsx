@@ -13,7 +13,7 @@ export const Data = ({ children }) => {
 
     const { posts, dispachPosts } = usePosts(page);
 
-    const { comments, getComments } = useComments();
+    const { comments, getComments, addPostNewComment } = useComments();
 
     console.log('Perkraunamas Data.jsx:', page, posts);
 
@@ -23,7 +23,8 @@ export const Data = ({ children }) => {
             posts,
             comments, 
             getComments,
-            dispachPosts
+            dispachPosts,
+            addPostNewComment
         }}>
             {children}
             {console.log('Renderinamas DATA su posts:', posts)}
