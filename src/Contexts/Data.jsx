@@ -3,17 +3,19 @@ import usePosts from '../Hooks/usePosts';
 import useComments from '../Hooks/useComments';
 import RouterContext from './Router';
 
+
 const DataContext = createContext();
 
 export const Data = ({ children }) => {
 
-    // duomenų gavimas iš Routerio konteksto. (duomenys tarp kontekstų)
+    // duomenų gavimas ir Routerio konteksto. (duomenys tarp kontekstų)
     const { page, parameters } = useContext(RouterContext);
 
 
     const { posts, dispachPosts } = usePosts(page);
 
-    const { comments, getComments, addPostNewComment } = useComments();
+    const { comments, getComments, addNewPostComment, upVoteComment, downVoteComment } = useComments();
+
 
     console.log('Perkraunamas Data.jsx:', page, posts);
 
@@ -24,7 +26,9 @@ export const Data = ({ children }) => {
             comments, 
             getComments,
             dispachPosts,
-            addPostNewComment
+            addNewPostComment,
+            upVoteComment,
+            downVoteComment
         }}>
             {children}
             {console.log('Renderinamas DATA su posts:', posts)}
