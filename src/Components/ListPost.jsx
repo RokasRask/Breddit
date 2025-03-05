@@ -14,7 +14,7 @@ export default function ListPost({ post }) {
 
     const [postCom, setPostCom] = useState('');
 
-    const { setLikes } = useVote(post.id);
+    const { setLikes } = useVote(post.id, 'post');
 
     const vote = useRef(false);
 
@@ -39,7 +39,7 @@ export default function ListPost({ post }) {
 
         console.log('pakito', post.id);
 
-    }, [post])
+    }, [post]);
 
     const upVote = _ => {
         vote.current = true;
