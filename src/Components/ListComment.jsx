@@ -3,6 +3,13 @@ import DataContext from '../Contexts/Data';
 import AuthContext from '../Contexts/Auth';
 import useVote from '../Hooks/useVote';
 
+const smiles = [
+    { text: ':)', code: '🙂' },
+    { text: ':D', code: '😀' },
+    { text: ';)', code: '😉' },
+    { text: ':/', code: '😕' }
+];
+
 export default function ListComment({ comment }) {
 
     const { comments, getComments, upVoteComment, downVoteComment, addNewCommentComment } = useContext(DataContext);
@@ -17,6 +24,16 @@ export default function ListComment({ comment }) {
     const vote = useRef(false);
 
     const isDynamicId = parseInt(comment.id) !== comment.id;
+
+    const commentHandler = e => {
+        let com = e.target.value;
+        smiles.forEach(s => {
+            if (com.includes(s.text)) {
+                com = com.replace(s.text, s.code);
+            };
+        });
+        setCommentsComent(com);
+    }
 
 
 
@@ -71,7 +88,7 @@ export default function ListComment({ comment }) {
 
                 <div className="write-comment">
                     <div>Write comment</div>
-                    <textarea value={commentsComent} onChange={e => setCommentsComent(e.target.value)} />
+                    <textarea value={commentsComent} onChange={commentHandler} />
                     <button className="blue" onClick={addComment}>send</button>
                 </div>
 
